@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Babylon.js Playground</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+
+  <!-- Babylon globals (kept so window.BABYLON is available if your app expects it) -->
+  <script src="https://assets.babylonjs.com/generated/Assets.js"></script>
+  <script src="https://cdn.babylonjs.com/recast.js"></script>
+  <script src="https://cdn.babylonjs.com/ammo.js"></script>
+  <script src="https://cdn.babylonjs.com/havok/HavokPhysics_umd.js"></script>
+  <script src="https://cdn.babylonjs.com/cannon.js"></script>
+  <script src="https://cdn.babylonjs.com/Oimo.js"></script>
+  <script src="https://cdn.babylonjs.com/earcut.min.js"></script>
+  <script src="https://cdn.babylonjs.com/babylon.js"></script>
+  <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+  <script src="https://cdn.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
+  <script src="https://cdn.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
+  <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.js"></script>
+  <script src="https://cdn.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+  <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
+  <script src="https://cdn.babylonjs.com/addons/babylonjs.addons.min.js"></script>
+  <script src="https://cdn.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+
+  <style>
+    html,body,#renderCanvas{width:100%;height:100%;margin:0;padding:0;overflow:hidden;background:#000}
+  </style>
+</head>
+<body>
+  <canvas id="renderCanvas"></canvas>
+  <script type="module">
+    // Turn bundle text into a module URL
+    const code = "// snapshot:index.js\nvar createScene = function() {\n  var scene = new BABYLON.Scene(engine);\n  var camera = new BABYLON.ArcRotateCamera(\"camera\", Math.PI / 2, Math.PI / 3, 20, BABYLON.Vector3.Zero(), scene);\n  camera.attachControl(canvas, true);\n  camera.lowerRadiusLimit = 2;\n  camera.upperRadiusLimit = 50;\n  var light = new BABYLON.HemisphericLight(\"light\", new BABYLON.Vector3(0, 1, 0), scene);\n  light.intensity = 0.8;\n  var dirLight = new BABYLON.DirectionalLight(\"dirLight\", new BABYLON.Vector3(-1, -2, -1), scene);\n  dirLight.position = new BABYLON.Vector3(10, 20, 10);\n  dirLight.intensity = 0.5;\n  var ground = BABYLON.MeshBuilder.CreateGround(\"ground\", { width: 20, height: 20 }, scene);\n  var meshUrl = \"https://marceloapontes.github.io/The-_World_of_Ratanaba/kauanedward-v1.glb\";\n  BABYLON.SceneLoader.ImportMesh(\"\", \"\", meshUrl, scene, function(newMeshes, particleSystems, skeletons, animationGroups) {\n    var character = newMeshes[0];\n    console.log(\"Personagem carregado com sucesso!\");\n    character.scaling = new BABYLON.Vector3(1, 1, 1);\n    character.position = new BABYLON.Vector3(0, 0, 0);\n    camera.target = character;\n    if (animationGroups.length > 0) {\n      animationGroups[0].start(true);\n    }\n  });\n  return scene;\n};\nexport {\n  createScene\n};\n//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsic25hcHNob3Q6aW5kZXguanMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbImV4cG9ydCB2YXIgY3JlYXRlU2NlbmUgPSBmdW5jdGlvbiAoKSB7XG4gICAgdmFyIHNjZW5lID0gbmV3IEJBQllMT04uU2NlbmUoZW5naW5lKTtcblxuICAgIC8vIDEuIENvbmZpZ3VyYVx1MDBFN1x1MDBFM28gZGEgQ1x1MDBFMm1lcmEgKFRlcmNlaXJhIFBlc3NvYSlcbiAgICB2YXIgY2FtZXJhID0gbmV3IEJBQllMT04uQXJjUm90YXRlQ2FtZXJhKFwiY2FtZXJhXCIsIE1hdGguUEkgLyAyLCBNYXRoLlBJIC8gMywgMjAsIEJBQllMT04uVmVjdG9yMy5aZXJvKCksIHNjZW5lKTtcbiAgICBjYW1lcmEuYXR0YWNoQ29udHJvbChjYW52YXMsIHRydWUpO1xuICAgIGNhbWVyYS5sb3dlclJhZGl1c0xpbWl0ID0gMjtcbiAgICBjYW1lcmEudXBwZXJSYWRpdXNMaW1pdCA9IDUwO1xuXG4gICAgLy8gMi4gTHV6ZXMgZG8gYW1iaWVudGVcbiAgICB2YXIgbGlnaHQgPSBuZXcgQkFCWUxPTi5IZW1pc3BoZXJpY0xpZ2h0KFwibGlnaHRcIiwgbmV3IEJBQllMT04uVmVjdG9yMygwLCAxLCAwKSwgc2NlbmUpO1xuICAgIGxpZ2h0LmludGVuc2l0eSA9IDAuODtcblxuICAgIHZhciBkaXJMaWdodCA9IG5ldyBCQUJZTE9OLkRpcmVjdGlvbmFsTGlnaHQoXCJkaXJMaWdodFwiLCBuZXcgQkFCWUxPTi5WZWN0b3IzKC0xLCAtMiwgLTEpLCBzY2VuZSk7XG4gICAgZGlyTGlnaHQucG9zaXRpb24gPSBuZXcgQkFCWUxPTi5WZWN0b3IzKDEwLCAyMCwgMTApO1xuICAgIGRpckxpZ2h0LmludGVuc2l0eSA9IDAuNTtcblxuICAgIC8vIDMuIENoXHUwMEUzbyBkZSByZWZlclx1MDBFQW5jaWFcbiAgICB2YXIgZ3JvdW5kID0gQkFCWUxPTi5NZXNoQnVpbGRlci5DcmVhdGVHcm91bmQoXCJncm91bmRcIiwge3dpZHRoOiAyMCwgaGVpZ2h0OiAyMH0sIHNjZW5lKTtcblxuICAgIC8vIDQuIENhcnJlZ2FtZW50byBkbyBzZXUgbW9kZWxvIC5nbGIgb3RpbWl6YWRvIHZpYSBHaXRIdWIgUGFnZXNcbiAgICB2YXIgbWVzaFVybCA9IFwiaHR0cHM6Ly9tYXJjZWxvYXBvbnRlcy5naXRodWIuaW8vVGhlLV9Xb3JsZF9vZl9SYXRhbmFiYS9rYXVhbmVkd2FyZC12MS5nbGJcIjsgXG4gICAgXG4gICAgQkFCWUxPTi5TY2VuZUxvYWRlci5JbXBvcnRNZXNoKFwiXCIsIFwiXCIsIG1lc2hVcmwsIHNjZW5lLCBmdW5jdGlvbiAobmV3TWVzaGVzLCBwYXJ0aWNsZVN5c3RlbXMsIHNrZWxldG9ucywgYW5pbWF0aW9uR3JvdXBzKSB7XG4gICAgICAgIHZhciBjaGFyYWN0ZXIgPSBuZXdNZXNoZXNbMF07XG4gICAgICAgIGNvbnNvbGUubG9nKFwiUGVyc29uYWdlbSBjYXJyZWdhZG8gY29tIHN1Y2Vzc28hXCIpO1xuICAgICAgICBcbiAgICAgICAgLy8gQWp1c3RlcyBkZSBlc2NhbGEgb3UgcG9zaVx1MDBFN1x1MDBFM29cbiAgICAgICAgY2hhcmFjdGVyLnNjYWxpbmcgPSBuZXcgQkFCWUxPTi5WZWN0b3IzKDEsIDEsIDEpO1xuICAgICAgICBjaGFyYWN0ZXIucG9zaXRpb24gPSBuZXcgQkFCWUxPTi5WZWN0b3IzKDAsIDAsIDApO1xuXG4gICAgICAgIC8vIEZheiBhIGNcdTAwRTJtYXJhIGZvY2FyIG5vIHBlcnNvbmFnZW1cbiAgICAgICAgY2FtZXJhLnRhcmdldCA9IGNoYXJhY3RlcjtcblxuICAgICAgICAvLyBSZXByb2R1eiBhbmltYVx1MDBFN1x1MDBFM28gZW1idXRpZGEgc2UgaG91dmVyXG4gICAgICAgIGlmIChhbmltYXRpb25Hcm91cHMubGVuZ3RoID4gMCkge1xuICAgICAgICAgICAgYW5pbWF0aW9uR3JvdXBzWzBdLnN0YXJ0KHRydWUpO1xuICAgICAgICB9XG4gICAgfSk7XG5cbiAgICByZXR1cm4gc2NlbmU7XG59O1xuLy8jIHNvdXJjZVVSTD1maWxlOi8vL3BnL2luZGV4LmpzIl0sCiAgIm1hcHBpbmdzIjogIjtBQUFPLElBQUksY0FBYyxXQUFZO0FBQ2pDLE1BQUksUUFBUSxJQUFJLFFBQVEsTUFBTSxNQUFNO0FBR3BDLE1BQUksU0FBUyxJQUFJLFFBQVEsZ0JBQWdCLFVBQVUsS0FBSyxLQUFLLEdBQUcsS0FBSyxLQUFLLEdBQUcsSUFBSSxRQUFRLFFBQVEsS0FBSyxHQUFHLEtBQUs7QUFDOUcsU0FBTyxjQUFjLFFBQVEsSUFBSTtBQUNqQyxTQUFPLG1CQUFtQjtBQUMxQixTQUFPLG1CQUFtQjtBQUcxQixNQUFJLFFBQVEsSUFBSSxRQUFRLGlCQUFpQixTQUFTLElBQUksUUFBUSxRQUFRLEdBQUcsR0FBRyxDQUFDLEdBQUcsS0FBSztBQUNyRixRQUFNLFlBQVk7QUFFbEIsTUFBSSxXQUFXLElBQUksUUFBUSxpQkFBaUIsWUFBWSxJQUFJLFFBQVEsUUFBUSxJQUFJLElBQUksRUFBRSxHQUFHLEtBQUs7QUFDOUYsV0FBUyxXQUFXLElBQUksUUFBUSxRQUFRLElBQUksSUFBSSxFQUFFO0FBQ2xELFdBQVMsWUFBWTtBQUdyQixNQUFJLFNBQVMsUUFBUSxZQUFZLGFBQWEsVUFBVSxFQUFDLE9BQU8sSUFBSSxRQUFRLEdBQUUsR0FBRyxLQUFLO0FBR3RGLE1BQUksVUFBVTtBQUVkLFVBQVEsWUFBWSxXQUFXLElBQUksSUFBSSxTQUFTLE9BQU8sU0FBVSxXQUFXLGlCQUFpQixXQUFXLGlCQUFpQjtBQUNySCxRQUFJLFlBQVksVUFBVSxDQUFDO0FBQzNCLFlBQVEsSUFBSSxtQ0FBbUM7QUFHL0MsY0FBVSxVQUFVLElBQUksUUFBUSxRQUFRLEdBQUcsR0FBRyxDQUFDO0FBQy9DLGNBQVUsV0FBVyxJQUFJLFFBQVEsUUFBUSxHQUFHLEdBQUcsQ0FBQztBQUdoRCxXQUFPLFNBQVM7QUFHaEIsUUFBSSxnQkFBZ0IsU0FBUyxHQUFHO0FBQzVCLHNCQUFnQixDQUFDLEVBQUUsTUFBTSxJQUFJO0FBQUEsSUFDakM7QUFBQSxFQUNKLENBQUM7QUFFRCxTQUFPO0FBQ1g7IiwKICAibmFtZXMiOiBbXQp9Cg==\n";
+    const blob = new Blob([code], { type: 'text/javascript' });
+    const url = URL.createObjectURL(blob);
+
+    const BABYLON = window.BABYLON;
+    const canvas = document.getElementById('renderCanvas');
+
+    // Import your bundled app (which exports createScene / default)
+    const mod = await import(url);
+
+    let engine = null;
+    if (typeof mod.createEngine === 'function') {
+      try { engine = await mod.createEngine(); } catch {}
+    }
+    if (!engine) {
+      engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
+    }
+    window.engine = engine; window.canvas = canvas;
+
+    let createScene = mod.createScene || mod.default;
+    if (!createScene && mod.Playground?.CreateScene) createScene = (e,c)=>mod.Playground.CreateScene(e,c);
+    if (!createScene) throw new Error('No createScene() export found.');
+
+    const scene = await (createScene(engine, canvas) ?? createScene());
+    engine.runRenderLoop(()=>scene.render());
+    addEventListener('resize', ()=>engine.resize());
+
+    addEventListener('unload', ()=> URL.revokeObjectURL(url));
+  </script>
+</body>
+</html>
